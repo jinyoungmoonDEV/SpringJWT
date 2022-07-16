@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data //Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

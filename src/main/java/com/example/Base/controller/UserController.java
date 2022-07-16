@@ -45,13 +45,7 @@ public class UserController {
     @PostMapping("/user/save")
     public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
         try {
-            log.info(userDTO.getEmail());
-            UserEntity userEntity = UserEntity.builder()
-                    .email(userDTO.getEmail())
-                    .password(userDTO.getPassword())
-                    .username(userDTO.getUsername())
-                    .build();
-            log.info(String.valueOf(userEntity));
+            UserEntity userEntity = userDTO.toEntity();
 
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());// = localhost8080:/api/user/save
             return ResponseEntity.created(uri).body(userService.saveUser(userEntity)); //201 Created => HTTP 201 Created는 요청이 성공적으로 처리되었으며, 자원이 생성되었음을 나타내는 성공 상태 응답 코드(URI 필요)
@@ -67,9 +61,7 @@ public class UserController {
     @PostMapping("/role/save")
     public ResponseEntity<?>saveRole(@RequestBody RoleDTO roleDTO){
         try {
-            RoleEntity roleEntity = RoleEntity.builder()
-                    .name(roleDTO.getName())
-                    .build();
+            RoleEntity roleEntity = roleDTO.toEntity();
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());// = localhost8080:/api/role/save
             return ResponseEntity.created(uri).body(userService.saveRole(roleEntity));
         } catch (Exception e) {
